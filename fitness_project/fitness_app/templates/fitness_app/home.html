@@ -1,0 +1,10 @@
+{% extends 'fitness_app/base.html' %}
+
+{% block content %}
+<h1>Welcome to Your Fitness Tracker</h1>
+<p>Total Calories Consumed: <strong>{{ total_food_calories }}</strong> kcal</p>
+<p>Total Calories Burned: <strong>{{ total_burned_calories }}</strong> kcal</p>
+
+<a href="{% url 'food_calorie' %}" class="btn">Add Food Calories</a>
+<a href="{% url 'fitness_tracker' %}" class="btn">Track Fitness</a>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'fitness_app/base.html' %}
+
+{% block content %}
+    <h1>Food Calorie Tracker</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="food_name" placeholder="Enter food name">
+        <input type="number" name="calories" placeholder="Enter calories">
+        <button type="submit">Add Food</button>
+    </form>
+    <h2>Food Items</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Food Name</th>
+                <th>Calories</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for food in foods %}
+            <tr>
+                <td>{{ food.name }}</td>
+                <td>{{ food.calories }}</td>
+                <td>
+                    <form method="post" action="{% url 'delete_food' food.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">No food items added yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

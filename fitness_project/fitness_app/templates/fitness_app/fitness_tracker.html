@@ -1,0 +1,40 @@
+{% extends 'fitness_app/base.html' %}
+
+{% block content %}
+    <h1>Fitness Tracker</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="activity_name" placeholder="Enter activity name">
+        <input type="number" name="duration" placeholder="Enter duration (in minutes)">
+        <button type="submit">Add Activity</button>
+    </form>
+    <h2>Activity Tracker</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Activity Name</th>
+                <th>Duration (Minutes)</th>
+                <th>Calories Burned</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for activity in activities %}
+            <tr>
+                <td>{{ activity.name }}</td>
+                <td>{{ activity.duration }}</td>
+                <td>{{ activity.calories_burned }}</td>
+                <td>
+                    <form method="post" action="{% url 'delete_exercise' activity.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No activities added yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
